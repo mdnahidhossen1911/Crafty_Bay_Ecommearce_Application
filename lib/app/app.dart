@@ -1,6 +1,8 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/app/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CraftyBayApp extends StatelessWidget {
   const CraftyBayApp({super.key});
@@ -15,6 +17,17 @@ class CraftyBayApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         colorSchemeSeed: AppColors.themeColor,
       ),
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: Locale('bn'),
+      supportedLocales: [
+        Locale('en'),
+        Locale('bn'),
+      ],
     );
   }
 }
