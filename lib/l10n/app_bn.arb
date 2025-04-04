@@ -4,5 +4,14 @@
   "plzEnterEmailPass": "আপনার ইমেইল এবং পাসওয়ার্ড লিখুন",
   "email": "ইমেইল",
   "password": "পাসওয়ার্ড",
-  "signIn": "সাইন ইন"
+  "signIn": "সাইন ইন",
+  "doNotHaveAccount":"আপনার কি অ্যাকাউন্ট নেই? ",
+  "signUp":"নিবন্ধন করুন",
+  "completeProfile": "প্রোফাইল সম্পূর্ণ করুন",
+  "signUpdetails": "আপনার বিস্তারিত দিয়ে আমাদের সাথে শুরু করুন",
+  "firstName": "প্রথম নাম",
+  "lastName": "পদবি",
+  "mobile": "মোবাইল নম্বর",
+  "address": "ঠিকানা",
+  "registration": "নিবন্ধন"
 }

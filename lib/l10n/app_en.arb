@@ -4,5 +4,15 @@
   "plzEnterEmailPass": "Please Enter Your Email and password",
   "email": "Email",
   "password": "Password",
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "doNotHaveAccount":"Don't have an account? ",
+  "signUp":"Sign Up",
+  "completeProfile": "Complete Profile",
+  "signUpdetails": "Get started with us with your details",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "mobile": "Mobile",
+  "address": "ঠিকানা",
+  "registration": "Registration"
+
 }
