@@ -1,3 +1,8 @@
 {
-  "version": "সংস্করণ"
+  "version": "সংস্করণ",
+  "welcomeback": "স্বাগতম আপনাকে",
+  "plzEnterEmailPass": "আপনার ইমেইল এবং পাসওয়ার্ড লিখুন",
+  "email": "ইমেইল",
+  "password": "পাসওয়ার্ড",
+  "signIn": "সাইন ইন"
 }

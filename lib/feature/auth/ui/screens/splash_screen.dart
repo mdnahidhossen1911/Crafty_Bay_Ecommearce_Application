@@ -1,5 +1,6 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/app/app_config.dart';
+import 'package:crafty_bay/feature/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _moveNextScreen();
+  }
+
+  Future<void> _moveNextScreen() async{
+    await Future.delayed(Duration(seconds: 3));
+    Navigator.pushReplacementNamed(context, SignInScreen.name);
   }
 
   @override
