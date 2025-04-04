@@ -12,7 +12,10 @@
   "firstName": "First Name",
   "lastName": "Last Name",
   "mobile": "Mobile",
-  "address": "ঠিকানা",
-  "registration": "Registration"
-
+  "address": "Address",
+  "registration": "Registration",
+  "enterOtp": "Enter OTP Code",
+  "otpSent": "A 4 Digit OTP Code has been Sent",
+  "otpExpire": "This OTP will expire in ",
+  "resendCode": "Resend Code"
 }

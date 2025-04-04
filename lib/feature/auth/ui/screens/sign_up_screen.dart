@@ -1,3 +1,4 @@
+import 'package:crafty_bay/feature/auth/ui/screens/otp_verification_screen.dart' show OtpVerificationScreen;
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/core/extensions/text_theme_extension.dart';
@@ -72,7 +73,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, OtpVerificationScreen.name);
+                },
                 child: Text(
                   context.localization.registration,
                   style: TextStyle(color: Colors.white),
