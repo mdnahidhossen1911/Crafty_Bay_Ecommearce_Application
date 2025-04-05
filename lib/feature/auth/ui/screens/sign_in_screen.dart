@@ -1,6 +1,7 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/feature/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
+import 'package:crafty_bay/feature/common/screens/main_botton_nav_screen.dart' show MainBottomNavScreen;
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/core/extensions/text_theme_extension.dart';
 import 'package:flutter/gestures.dart';
@@ -52,7 +53,9 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (route) => false,);
+                },
                 child: Text(
                   context.localization.signIn,
                   style: TextStyle(color: Colors.white),

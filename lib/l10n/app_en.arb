@@ -17,5 +17,14 @@
   "enterOtp": "Enter OTP Code",
   "otpSent": "A 4 Digit OTP Code has been Sent",
   "otpExpire": "This OTP will expire in ",
-  "resendCode": "Resend Code"
+  "resendCode": "Resend Code",
+  "all_categories": "All Categories",
+  "popular": "Popular",
+  "special": "Special",
+  "see_all": "See All",
+  "home": "Home",
+  "category": "Category",
+  "card": "Card",
+  "wish": "Wish",
+  "snew": "New"
 }
