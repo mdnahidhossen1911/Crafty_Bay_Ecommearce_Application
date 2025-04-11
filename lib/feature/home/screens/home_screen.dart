@@ -3,8 +3,9 @@ import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_contr
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/home/widgets/HomeCarouselSlider.dart';
 import 'package:crafty_bay/feature/common/widgets/category_item.dart';
-import 'package:crafty_bay/feature/home/widgets/product_card.dart';
+import 'package:crafty_bay/feature/common/widgets/product_card.dart';
 import 'package:crafty_bay/feature/home/widgets/section_header.dart';
+import 'package:crafty_bay/feature/product/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -35,15 +36,22 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 16),
             _buildCategoryView(),
             SizedBox(height: 20),
-            SectionHeader(title: context.localization.popular, oneTabSeeAll: () {}),
+            SectionHeader(title: context.localization.popular, oneTabSeeAll: () {
+              Navigator.pushNamed(context, ProductListScreen.name,arguments: context.localization.popular);
+            }),
             SizedBox(height: 16),
             _buildProductView(),
             SizedBox(height: 16),
-            SectionHeader(title: context.localization.special, oneTabSeeAll: () {}),
+            SectionHeader(title: context.localization.special, oneTabSeeAll: () {
+              Navigator.pushNamed(context, ProductListScreen.name,arguments: context.localization.special);
+            }),
             SizedBox(height: 16),
             _buildProductView(),
             SizedBox(height: 16),
-            SectionHeader(title: context.localization.snew, oneTabSeeAll: () {}),
+            SectionHeader(title: context.localization.snew, oneTabSeeAll: () {
+              Navigator.pushNamed(context, ProductListScreen.name,arguments: context.localization.snew);
+
+            }),
             SizedBox(height: 16),
             _buildProductView(),
             SizedBox(height: 16),
@@ -77,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
           prefixIcon: Icon(Icons.search, color: Colors.grey.shade400),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(8),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade300),
@@ -99,7 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
             iconData: Icons.computer,
             onTab: () {},
           ),
-          CategoryItem(title: 'Food', iconData: Icons.fastfood, onTab: () {}),
+          CategoryItem(title: 'Food', iconData: Icons.fastfood, onTab: () {
+            Navigator.pushNamed(context, ProductListScreen.name,arguments: 'Food');
+          }),
           CategoryItem(title: 'Fashion', iconData: Icons.face, onTab: () {}),
           CategoryItem(title: 'Furniture', iconData: Icons.bed, onTab: () {}),
         ],
