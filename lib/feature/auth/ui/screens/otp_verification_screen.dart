@@ -55,7 +55,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                },
                 child: Text(
                   context.localization.resendCode,
                   style: TextStyle(color: AppColors.themeColor),

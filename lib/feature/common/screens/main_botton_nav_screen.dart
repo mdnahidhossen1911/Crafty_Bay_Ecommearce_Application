@@ -1,5 +1,5 @@
 import 'package:crafty_bay/feature/card/ui/screens/card_screen.dart';
-import 'package:crafty_bay/feature/caregory/screens/category_screen.dart';
+import 'package:crafty_bay/feature/caregory/screens/category_list_screen.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/home/screens/home_screen.dart';
