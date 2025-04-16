@@ -3,6 +3,7 @@ import 'package:crafty_bay/feature/caregory/screens/category_list_screen.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/home/screens/home_screen.dart';
+import 'package:crafty_bay/feature/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     CategoryScreen(),
     CardScreen(),
     HomeScreen(),
+    WishListScreen(),
   ];
 
   @override

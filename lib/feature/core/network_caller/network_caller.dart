@@ -67,7 +67,7 @@ class NetworkCaller {
         'token': ''
       };
 
-      _logRequest(url, headers);
+      _logRequest(url, headers,requestBody: body);
       Response response =
       await post(uri, headers: headers, body: jsonEncode(body));
       _logResponse(url, response);

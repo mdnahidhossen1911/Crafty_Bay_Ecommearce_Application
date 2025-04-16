@@ -1,20 +1,33 @@
 import 'package:crafty_bay/app/app_color.dart';
+import 'package:crafty_bay/feature/auth/data/model/verify_otp_model.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/otp_veriffication_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
+import 'package:crafty_bay/feature/common/screens/main_botton_nav_screen.dart';
 import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/core/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+  const OtpVerificationScreen({super.key, required this.email});
 
   static String name = '/OtpVerification';
+
+  final String email;
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final TextEditingController _otpTEController = TextEditingController();
+
+  OtpVerifyicationController otpVerifyicationController =
+      Get.find<OtpVerifyicationController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +50,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               SizedBox(height: 20),
               _buildPinCodeTextField(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formkey.currentState!.validate()) {
+                      oneTabVerityOtp();
+                    }
+                  },
+                  child: Text('Verify'),
+                ),
+              ),
 
               SizedBox(height: 16),
               RichText(
@@ -55,8 +79,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Text(
                   context.localization.resendCode,
                   style: TextStyle(color: AppColors.themeColor),
@@ -72,28 +95,53 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Widget _buildPinCodeTextField() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: PinCodeTextField(
-        length: 4,
-        animationType: AnimationType.fade,
-        keyboardType: TextInputType.number,
-        pinTheme: PinTheme(
-          shape: PinCodeFieldShape.box,
-          borderRadius: BorderRadius.circular(5),
-          fieldHeight: 50,
-          fieldWidth: 50,
-          activeFillColor: Colors.white,
-          selectedFillColor: AppColors.themeColor,
-          inactiveFillColor: Colors.teal.shade50,
-          activeColor: AppColors.themeColor,
-          selectedColor: AppColors.themeColor,
-          inactiveColor: Colors.white,
+      child: Form(
+        key: _formkey,
+        child: PinCodeTextField(
+          length: 4,
+          controller: _otpTEController,
+          animationType: AnimationType.fade,
+          keyboardType: TextInputType.number,
+          pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(5),
+            fieldHeight: 50,
+            fieldWidth: 50,
+            activeFillColor: Colors.white,
+            selectedFillColor: AppColors.themeColor,
+            inactiveFillColor: Colors.teal.shade50,
+            activeColor: AppColors.themeColor,
+            selectedColor: AppColors.themeColor,
+            inactiveColor: Colors.white,
+          ),
+          animationDuration: const Duration(milliseconds: 300),
+          backgroundColor: Colors.transparent,
+          enableActiveFill: true,
+          appContext: context,
+          onChanged: (value) {},
+          validator: (value) {
+            if ((value?.length ?? 0) < 4) {
+              return 'Enter your otp';
+            }
+            return null;
+          },
         ),
-        animationDuration: const Duration(milliseconds: 300),
-        backgroundColor: Colors.transparent,
-        enableActiveFill: true,
-        appContext: context,
-        onChanged: (value) {},
       ),
     );
+  }
+
+  Future<void> oneTabVerityOtp() async {
+    VerifyOtpModel verifyOtpModel = VerifyOtpModel(
+      email: widget.email,
+      otp: _otpTEController.text,
+    );
+    bool isSuccess = await otpVerifyicationController.verify(verifyOtpModel);
+    if (isSuccess) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        MainBottomNavScreen.name,
+        (route) => false,
+      );
+    }
   }
 }
