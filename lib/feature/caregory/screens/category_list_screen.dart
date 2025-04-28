@@ -1,4 +1,6 @@
+import 'package:crafty_bay/feature/common/controller/category_controller.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
+import 'package:crafty_bay/feature/common/model/category_model.dart';
 import 'package:crafty_bay/feature/common/widgets/category_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,21 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController.addListener(pagination);
+  }
+  void pagination(){
+    if(_scrollController.position.extentAfter < 300){
+      Get.find<CategoryController>().getCategory();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -28,20 +45,41 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
           title: Text('Category', style: TextStyle(fontSize: 24)),
         ),
-        body: GridView.builder(
-          itemCount: 10,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            mainAxisSpacing: 8,
-          ),
-          itemBuilder: (context, index) {
-            return CategoryItem(
-              iconData: Icons.laptop,
-              title: 'Laptop',
-              onTab: () {},
+        body: GetBuilder<CategoryController>(
+          builder: (controller) {
+            return RefreshIndicator(
+              onRefresh: () async{
+                Get.find<CategoryController>().refrash();
+              },
+              child: Column(
+                children: [
+                  Expanded(
+                    child: controller.inProgress ==false? GridView.builder(
+                      controller: _scrollController,
+                      itemCount: controller.categoryList.length,
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 8,
+                      ),
+                      itemBuilder: (context, index) {
+                        CategoryModel categoryModel =
+                            controller.categoryList[index];
+                        return FittedBox(
+                          child: CategoryItem(
+                            icon: categoryModel.icon,
+                            title: categoryModel.title,
+                            onTab: () {},
+                          ),
+                        );
+                      },
+                    ): Center(child: CircularProgressIndicator(),),
+                  ),
+                  if (controller.paginationInProgress) CircularProgressIndicator(),
+                ],
+              ),
             );
-          },
+          }
         ),
       ),
     );

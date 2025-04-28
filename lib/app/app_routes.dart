@@ -24,7 +24,7 @@ class AppRoutes {
     }else if (settings.name == MainBottomNavScreen.name) {
       route = const MainBottomNavScreen();
     }else if (settings.name == ProductListScreen.name) {
-      String category = settings.arguments as String;
+      Map<String,dynamic> category = settings.arguments as Map<String,dynamic>;
       route =  ProductListScreen(category: category);
     }else if (settings.name == ProductDetailsScreen.name) {
       route = const ProductDetailsScreen();

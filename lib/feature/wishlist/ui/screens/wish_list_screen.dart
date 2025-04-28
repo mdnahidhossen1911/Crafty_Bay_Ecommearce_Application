@@ -12,7 +12,7 @@ class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(itemBuilder: (context, index) {
-      return ProductCart();
+      // return ProductCart();
     },);
   }
 }

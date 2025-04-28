@@ -1,9 +1,11 @@
 import 'package:crafty_bay/app/app_color.dart';
+import 'package:crafty_bay/feature/product/data/product_model.dart';
 import 'package:crafty_bay/feature/product/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductCart extends StatelessWidget {
-  const ProductCart({super.key});
+  final ProductModel products;
+  const ProductCart({super.key,required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ProductCart extends StatelessWidget {
                     height: 124,
                     width: double.maxFinite,
                     child: Image.network(
-                      'https://static-01.daraz.com.bd/p/1170742dc95517df094c34a95b205ca1.jpg',
+                      products.photos.isNotEmpty ? products.photos.first:'',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -60,14 +62,14 @@ class ProductCart extends StatelessWidget {
               ],
             ),
             Text(
-              'Apple introduces iPhone 16',
+              products.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87, height: 1.3),
             ),
             SizedBox(height: 2),
             Text(
-              '\$599 ',
+              '৳${products.currentPrice} ',
               style: TextStyle(
                 color: AppColors.themeColor,
                 fontSize: 12,
