@@ -1,10 +1,9 @@
 import 'package:crafty_bay/app/app_urls.dart';
-import 'package:crafty_bay/feature/core/network_caller/network_caller.dart';
-import 'package:crafty_bay/feature/product/data/product_get_request_model.dart';
+import 'package:crafty_bay/core/network_caller/network_caller.dart';
 import 'package:crafty_bay/feature/product/data/product_model.dart';
 import 'package:get/get.dart';
 
-class ProductController extends GetxController {
+class PopularProductListController extends GetxController {
   final int _perPageDataCount = 30;
   bool _inProgress = false;
   bool _paginationInProgress = false;
@@ -23,7 +22,7 @@ class ProductController extends GetxController {
 
   List<ProductModel> get producvtList => _productList;
 
-  Future<bool> getProduct(ProductGetRequestModel model) async {
+  Future<bool> getProduct() async {
     if (_paginationInProgress) {
       return false;
     }
@@ -47,8 +46,7 @@ class ProductController extends GetxController {
       queryParams: {
         'count': _perPageDataCount,
         'page': _currentPage,
-        'tag': model.tag??'',
-        'category': model.category??'',
+        'category': '67c35af85e8a445235de197b',
       },
     );
     if (response.isSuccess) {
@@ -72,9 +70,9 @@ class ProductController extends GetxController {
     return isSuccess;
   }
 
-  void refrash(ProductGetRequestModel model) {
+  void refrash() {
     _productList = [];
     _currentPage = 0;
-    getProduct(model);
+    getProduct();
   }
 }

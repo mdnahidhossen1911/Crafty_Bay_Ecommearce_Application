@@ -3,7 +3,10 @@ import 'package:crafty_bay/feature/caregory/screens/category_list_screen.dart';
 import 'package:crafty_bay/feature/common/controller/category_controller.dart';
 import 'package:crafty_bay/feature/common/controller/home_slider_controller.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
-import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
+import 'package:crafty_bay/feature/common/controller/new_product_list_controller.dart';
+import 'package:crafty_bay/feature/common/controller/popular_product_list_controller.dart';
+import 'package:crafty_bay/feature/common/controller/special_product_list_controller.dart';
 import 'package:crafty_bay/feature/home/screens/home_screen.dart';
 import 'package:crafty_bay/feature/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +37,9 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     super.initState();
     Get.find<HomeSliderController>().getSliders();
     Get.find<CategoryController>().getCategory();
+    Get.find<PopularProductListController>().getProduct();
+    Get.find<NewProductListController>().getProduct();
+    Get.find<SpecialProductListController>().getProduct();
   }
   @override
   Widget build(BuildContext context) {

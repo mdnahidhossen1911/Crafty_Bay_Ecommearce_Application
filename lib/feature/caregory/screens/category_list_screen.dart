@@ -67,9 +67,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             controller.categoryList[index];
                         return FittedBox(
                           child: CategoryItem(
-                            icon: categoryModel.icon,
-                            title: categoryModel.title,
-                            onTab: () {},
+                            categoryModel: categoryModel,
                           ),
                         );
                       },

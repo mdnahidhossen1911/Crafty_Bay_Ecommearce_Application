@@ -1,5 +1,5 @@
 import 'package:crafty_bay/feature/common/widgets/product_card.dart';
-import 'package:crafty_bay/feature/product/controller/product_controller.dart';
+import 'package:crafty_bay/feature/product/controller/product_list_controller.dart';
 import 'package:crafty_bay/feature/product/data/product_get_request_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,13 +15,13 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-
+  final ProductListController _productController = ProductListController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<ProductController>().refrash(ProductGetRequestModel(category: widget.category['id']));
+    _productController.getProduct(ProductGetRequestModel(category: widget.category['id']??''));
   }
 
   @override
@@ -37,7 +37,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
         title: Text(widget.category['title'], style: TextStyle(fontSize: 24)),
         forceMaterialTransparency: true,
       ),
-      body: GetBuilder<ProductController>(
+      body: GetBuilder(
+        init: _productController,
         builder: (controller) {
           return
             controller.inProgress ? Center(child: CircularProgressIndicator()):

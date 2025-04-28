@@ -1,5 +1,5 @@
 import 'package:crafty_bay/app/app_color.dart';
-import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {

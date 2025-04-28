@@ -1,22 +1,24 @@
 import 'package:crafty_bay/app/app_color.dart';
+import 'package:crafty_bay/feature/common/model/category_model.dart';
+import 'package:crafty_bay/feature/product/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
-  final String icon;
-  final String title;
-  final VoidCallback onTab;
-
+  final CategoryModel categoryModel;
   const CategoryItem({
     super.key,
-    required this.icon,
-    required this.title,
-    required this.onTab,
+    required this.categoryModel
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTab,
+      onTap: (){
+        Navigator.pushNamed(context, ProductListScreen.name,arguments: {
+          'id':categoryModel.id,
+          'title':categoryModel.title
+        });
+      },
       child: SizedBox(
         width: 90,
         child: Column(
@@ -28,7 +30,7 @@ class CategoryItem extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.network(
-                  icon,
+                  categoryModel.icon,
                   width: 48,
                   height: 48,
                 ),
@@ -36,7 +38,7 @@ class CategoryItem extends StatelessWidget {
             ),
             SizedBox(height: 6),
             Text(
-              title, // example long text
+              categoryModel.title, // example long text
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center, // centers under the icon

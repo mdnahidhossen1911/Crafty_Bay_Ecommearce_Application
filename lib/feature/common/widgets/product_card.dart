@@ -11,7 +11,7 @@ class ProductCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetailsScreen.name);
+        Navigator.pushNamed(context, ProductDetailsScreen.name,arguments: products.id);
       },
       child: Container(
         width: 140,

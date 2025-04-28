@@ -1,13 +1,17 @@
 import 'package:crafty_bay/app/app_color.dart';
+import 'package:crafty_bay/feature/product/controller/product_details_controller.dart';
 import 'package:crafty_bay/feature/product/screens/product_review_screen.dart';
 import 'package:crafty_bay/feature/product/widgets/color_picker.dart';
 import 'package:crafty_bay/feature/product/widgets/increment_decrement_count_widget.dart';
 import 'package:crafty_bay/feature/product/widgets/product_view_carousel_slider.dart';
 import 'package:crafty_bay/feature/product/widgets/size_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final String id;
+
+  const ProductDetailsScreen({super.key, required this.id});
 
   static String name = '/productDetails';
 
@@ -16,106 +20,139 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final ProductDetailsController _detailsController =
+      ProductDetailsController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _detailsController.getProductDetails(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 0),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        child: GetBuilder(
+          init: _detailsController,
+          builder: (controller) {
+            return controller.inProgress == true
+                ? Center(child: CircularProgressIndicator())
+                : Column(
                   children: [
-                    Stack(
-                      children: [
-                        Container(height: 240, color: Colors.grey.shade100,
-                        child: ProductViewCarouselSlider(),
-                        ),
-                        _buildCustomAppBar(),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Happy New Year Special Deal Save 30%',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black87,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 240,
+                                  color: Colors.grey.shade100,
+                                  child: ProductViewCarouselSlider(
+                                    productModel: controller.productDetails,
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: 16),
-                              IncrementDecrementCountWidget(),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star_rounded,
-                                color: Colors.amberAccent,
-                              ),
-                              Text('4.5'),
-                              SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, ProductReviewScreen.name);
-                                },
-                                child: Text(
-                                  'Reviews',
-                                  style: TextStyle(
-                                    color: AppColors.themeColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 12),
-                          Text(
-                            'Color',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 6),
-                          ColorPicker(),
-                          SizedBox(height: 16),
-                          Text(
-                            'Size',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 6),
-                          SizePicker(),
-                          SizedBox(height: 24),
-                          Text(
-                            'Description',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator Reference site about Lorem Ipsum, giving information on its origins, as well asa random Lipsum generator",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey,
+                                _buildCustomAppBar(),
+                              ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          controller.productDetails?.title ??
+                                              "",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 16),
+                                      IncrementDecrementCountWidget(),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_rounded,
+                                        color: Colors.amberAccent,
+                                      ),
+                                      Text('4.5'),
+                                      SizedBox(width: 8),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            ProductReviewScreen.name,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Reviews',
+                                          style: TextStyle(
+                                            color: AppColors.themeColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 12),
+                                  Text(
+                                    'Color',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  ColorPicker(),
+                                  SizedBox(height: 16),
+                                  Text(
+                                    'Size',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  SizePicker(),
+                                  SizedBox(height: 24),
+                                  Text(
+                                    'Description',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    controller.productDetails?.description ??
+                                        '',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    _buildPriceAndAddtoCard(),
                   ],
-                ),
-              ),
-            ),
-            _buildPriceAndAddtoCard(),
-          ],
+                );
+          },
         ),
       ),
     );

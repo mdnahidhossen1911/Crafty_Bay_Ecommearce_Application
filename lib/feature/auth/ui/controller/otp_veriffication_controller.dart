@@ -1,6 +1,6 @@
 import 'package:crafty_bay/app/app_urls.dart';
 import 'package:crafty_bay/feature/auth/data/model/verify_otp_model.dart';
-import 'package:crafty_bay/feature/core/network_caller/network_caller.dart';
+import 'package:crafty_bay/core/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 
 class OtpVerifyicationController extends GetxController {

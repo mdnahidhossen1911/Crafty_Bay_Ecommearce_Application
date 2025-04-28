@@ -9,7 +9,7 @@ class SizePicker extends StatefulWidget {
 }
 
 class _SizePickerState extends State<SizePicker> {
-  int _sizeIndex = 0;
+  int? _sizeIndex;
 
   @override
   Widget build(BuildContext context) {

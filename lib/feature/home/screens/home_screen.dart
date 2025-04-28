@@ -1,14 +1,21 @@
 import 'package:crafty_bay/app/asset_path.dart';
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/common/controller/category_controller.dart';
 import 'package:crafty_bay/feature/common/controller/home_slider_controller.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
+import 'package:crafty_bay/feature/common/controller/new_product_list_controller.dart';
+import 'package:crafty_bay/feature/common/controller/popular_product_list_controller.dart';
+import 'package:crafty_bay/feature/common/controller/special_product_list_controller.dart';
 import 'package:crafty_bay/feature/common/model/category_model.dart';
 import 'package:crafty_bay/feature/common/widgets/category_item.dart';
 import 'package:crafty_bay/feature/common/widgets/product_card.dart';
-import 'package:crafty_bay/feature/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/home/widgets/HomeCarouselSlider.dart';
 import 'package:crafty_bay/feature/home/widgets/section_header.dart';
+import 'package:crafty_bay/feature/product/data/product_model.dart';
+import 'package:crafty_bay/feature/product/screens/new_product_list_screen.dart';
+import 'package:crafty_bay/feature/product/screens/popular_product_list_screen.dart';
 import 'package:crafty_bay/feature/product/screens/product_list_screen.dart';
+import 'package:crafty_bay/feature/product/screens/special_product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -26,9 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: RefreshIndicator(
-        onRefresh: () async{
+        onRefresh: () async {
           Get.find<HomeSliderController>().getSliders();
           Get.find<CategoryController>().refrash();
+          Get.find<PopularProductListController>().refrash();
+          Get.find<NewProductListController>().refrash();
+          Get.find<SpecialProductListController>().refrash();
         },
         child: SingleChildScrollView(
           child: Column(
@@ -52,39 +62,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 oneTabSeeAll: () {
                   Navigator.pushNamed(
                     context,
-                    ProductListScreen.name,
-                    arguments: context.localization.popular,
+                    PopularProductListScreen.name,
                   );
                 },
               ),
               SizedBox(height: 16),
-              _buildProductView(),
+              _buildPopularProductView(),
               SizedBox(height: 16),
               SectionHeader(
                 title: context.localization.special,
                 oneTabSeeAll: () {
                   Navigator.pushNamed(
                     context,
-                    ProductListScreen.name,
-                    arguments: context.localization.special,
+                    SpecialProductListScreen.name,
                   );
                 },
               ),
               SizedBox(height: 16),
-              _buildProductView(),
+              _buildSpecialProductView(),
               SizedBox(height: 16),
               SectionHeader(
                 title: context.localization.snew,
                 oneTabSeeAll: () {
                   Navigator.pushNamed(
                     context,
-                    ProductListScreen.name,
-                    arguments: context.localization.snew,
+                    NewProductListScreen.name,
                   );
                 },
               ),
               SizedBox(height: 16),
-              _buildProductView(),
+              _buildNewProductView(),
               SizedBox(height: 16),
             ],
           ),
@@ -93,17 +100,106 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  SizedBox _buildProductView() {
+  SizedBox _buildNewProductView() {
     return SizedBox(
-      height: 208,
-      // child: ListView.builder(
-      //   itemCount: 8,
-      //   scrollDirection: Axis.horizontal,
-      //   padding: EdgeInsets.symmetric(horizontal: 10),
-      //   itemBuilder: (context, index) {
-      //     return ProductCart();
-      //   },
-      // ),
+      height: 190,
+      child: GetBuilder<NewProductListController>(
+        builder: (controller) {
+          return controller.inProgress
+              ? Center(
+                child: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: CircularProgressIndicator(),
+                ),
+              )
+              : ListView.builder(
+                itemCount:
+                    controller.producvtList.length > 10
+                        ? 10
+                        : controller.producvtList.length,
+                padding: EdgeInsets.symmetric(horizontal: 14),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  ProductModel productModel = controller.producvtList[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: FittedBox(
+                      child: ProductCart(products: productModel),
+                    ),
+                  );
+                },
+              );
+        },
+      ),
+    );
+  }
+  SizedBox _buildSpecialProductView() {
+    return SizedBox(
+      height: 190,
+      child: GetBuilder<SpecialProductListController>(
+        builder: (controller) {
+          return controller.inProgress
+              ? Center(
+                child: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: CircularProgressIndicator(),
+                ),
+              )
+              : ListView.builder(
+                itemCount:
+                    controller.producvtList.length > 10
+                        ? 10
+                        : controller.producvtList.length,
+                padding: EdgeInsets.symmetric(horizontal: 14),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  ProductModel productModel = controller.producvtList[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: FittedBox(
+                      child: ProductCart(products: productModel),
+                    ),
+                  );
+                },
+              );
+        },
+      ),
+    );
+  }
+  SizedBox _buildPopularProductView() {
+    return SizedBox(
+      height: 190,
+      child: GetBuilder<PopularProductListController>(
+        builder: (controller) {
+          return controller.inProgress
+              ? Center(
+                child: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: CircularProgressIndicator(),
+                ),
+              )
+              : ListView.builder(
+                itemCount:
+                    controller.producvtList.length > 10
+                        ? 10
+                        : controller.producvtList.length,
+                padding: EdgeInsets.symmetric(horizontal: 14),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  ProductModel productModel = controller.producvtList[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: FittedBox(
+                      child: ProductCart(products: productModel),
+                    ),
+                  );
+                },
+              );
+        },
+      ),
     );
   }
 
@@ -153,16 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: FittedBox(
-                      child: CategoryItem(
-                        icon: categoryModel.icon,
-                        title: categoryModel.title,
-                        onTab: () {
-                          Navigator.pushNamed(context, ProductListScreen.name,arguments: {
-                            'id':categoryModel.id,
-                            'title':categoryModel.title
-                          });
-                        },
-                      ),
+                      child: CategoryItem(categoryModel: categoryModel),
                     ),
                   );
                 },
@@ -189,9 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(width: 14),
         CircleAvatar(
           backgroundColor: Colors.grey.shade50,
-          child: IconButton(onPressed: () {
-            
-          }, icon: Icon(Icons.person)),
+          child: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
         ),
         SizedBox(width: 14),
       ],

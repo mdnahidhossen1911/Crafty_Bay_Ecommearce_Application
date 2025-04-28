@@ -1,6 +1,6 @@
 import 'package:crafty_bay/app/app_urls.dart';
 import 'package:crafty_bay/feature/common/model/slider_model.dart';
-import 'package:crafty_bay/feature/core/network_caller/network_caller.dart';
+import 'package:crafty_bay/core/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 
 class HomeSliderController extends GetxController {

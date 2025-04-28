@@ -9,7 +9,7 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  int _colorIndex = 0;
+  int? _colorIndex;
 
   @override
   Widget build(BuildContext context) {
