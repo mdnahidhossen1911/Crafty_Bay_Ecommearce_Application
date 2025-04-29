@@ -9,12 +9,12 @@ class PopularProductListScreen extends StatefulWidget {
   static String name = "/PopularProductList";
 
   @override
-  State<PopularProductListScreen> createState() => _PopularProductListScreenState();
+  State<PopularProductListScreen> createState() =>
+      _PopularProductListScreenState();
 }
 
 class _PopularProductListScreenState extends State<PopularProductListScreen> {
-
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -22,12 +22,12 @@ class _PopularProductListScreenState extends State<PopularProductListScreen> {
     super.initState();
     _scrollController.addListener(pagination);
   }
-  void pagination(){
-    if(_scrollController.position.extentAfter < 300){
+
+  void pagination() {
+    if (_scrollController.position.extentAfter < 300) {
       Get.find<PopularProductListController>().getProduct();
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,24 +43,45 @@ class _PopularProductListScreenState extends State<PopularProductListScreen> {
         forceMaterialTransparency: true,
       ),
       body: GetBuilder<PopularProductListController>(
-          builder: (controller) {
-            return
-              controller.inProgress ? Center(child: CircularProgressIndicator()):
-              GridView.builder(
-                itemCount: controller.producvtList.length,
-                padding: EdgeInsets.symmetric(horizontal: 14),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 230,
-                  mainAxisSpacing: 16,
-                ),
-                itemBuilder: (context, index) {
-                  return FittedBox(child: ProductCart(
-                    products: controller.producvtList[index],
-                  ));
+        builder: (controller) {
+          return controller.inProgress
+              ? Center(child: CircularProgressIndicator())
+              : RefreshIndicator(
+                onRefresh: () async {
+                  Get.find<PopularProductListController>().refrash();
                 },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisExtent: 200,
+                          mainAxisSpacing: 20,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                                childCount: controller.producvtList.length,
+                                (context, index) {
+                          return FittedBox(
+                            child: ProductCart(
+                              products: controller.producvtList[index],
+                            ),
+                          );
+                        }),
+                      ),
+                      if(controller.paginationInProgress)
+                      SliverToBoxAdapter(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               );
-          }
+        },
       ),
     );
   }

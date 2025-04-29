@@ -13,7 +13,6 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -22,8 +21,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
     super.initState();
     _scrollController.addListener(pagination);
   }
-  void pagination(){
-    if(_scrollController.position.extentAfter < 300){
+
+  void pagination() {
+    if (_scrollController.position.extentAfter < 300) {
       Get.find<CategoryController>().getCategory();
     }
   }
@@ -37,6 +37,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          forceMaterialTransparency: true,
           leading: IconButton(
             onPressed: () {
               Get.find<MainBottomNavIndexController>().backHome();
@@ -48,36 +49,46 @@ class _CategoryScreenState extends State<CategoryScreen> {
         body: GetBuilder<CategoryController>(
           builder: (controller) {
             return RefreshIndicator(
-              onRefresh: () async{
+              onRefresh: () async {
                 Get.find<CategoryController>().refrash();
               },
-              child: Column(
-                children: [
-                  Expanded(
-                    child: controller.inProgress ==false? GridView.builder(
-                      controller: _scrollController,
-                      itemCount: controller.categoryList.length,
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 8,
-                      ),
-                      itemBuilder: (context, index) {
-                        CategoryModel categoryModel =
-                            controller.categoryList[index];
-                        return FittedBox(
-                          child: CategoryItem(
-                            categoryModel: categoryModel,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    controller.inProgress == true
+                        ? SliverToBoxAdapter(
+                          child: Center(child: CircularProgressIndicator()),
+                        )
+                        : SliverGrid(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 8,
+                              ),
+                          delegate: SliverChildBuilderDelegate(
+                            childCount: controller.categoryList.length,
+                            (context, index) {
+                              CategoryModel categoryModel =
+                                  controller.categoryList[index];
+                              return FittedBox(
+                                child: CategoryItem(
+                                  categoryModel: categoryModel,
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ): Center(child: CircularProgressIndicator(),),
-                  ),
-                  if (controller.paginationInProgress) CircularProgressIndicator(),
-                ],
+                        ),
+                    if (controller.paginationInProgress)
+                      SliverToBoxAdapter(
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                  ],
+                ),
               ),
             );
-          }
+          },
         ),
       ),
     );

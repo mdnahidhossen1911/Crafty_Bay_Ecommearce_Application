@@ -15,7 +15,7 @@ class SpecialProductListScreen extends StatefulWidget {
 
 class _SpecialProductListScreenState extends State<SpecialProductListScreen> {
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -45,22 +45,43 @@ class _SpecialProductListScreenState extends State<SpecialProductListScreen> {
       ),
       body: GetBuilder<SpecialProductListController>(
           builder: (controller) {
-            return
-              controller.inProgress ? Center(child: CircularProgressIndicator()):
-              GridView.builder(
-                itemCount: controller.producvtList.length,
-                padding: EdgeInsets.symmetric(horizontal: 14),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 230,
-                  mainAxisSpacing: 16,
+            return controller.inProgress
+                ? Center(child: CircularProgressIndicator())
+                : RefreshIndicator(
+              onRefresh: () async {
+                Get.find<SpecialProductListController>().refrash();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisExtent: 200,
+                        mainAxisSpacing: 20,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                          childCount: controller.producvtList.length,
+                              (context, index) {
+                            return FittedBox(
+                              child: ProductCart(
+                                products: controller.producvtList[index],
+                              ),
+                            );
+                          }),
+                    ),
+                    if(controller.paginationInProgress)
+                      SliverToBoxAdapter(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                  ],
                 ),
-                itemBuilder: (context, index) {
-                  return FittedBox(child: ProductCart(
-                    products: controller.producvtList[index],
-                  ));
-                },
-              );
+              ),
+            );
           }
       ),
     );
