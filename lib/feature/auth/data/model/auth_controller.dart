@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
   final String _tokenKey = 'token';
-  final String _userDataKey = 'token';
+  final String _userDataKey = 'userdata';
 
   String? token;
   UserModel? user;
@@ -42,5 +42,9 @@ class AuthController {
     await sharedPreferences.clear();
     token = null;
     user = null;
+  }
+
+  bool isValid(){
+    return token != null;
   }
 }

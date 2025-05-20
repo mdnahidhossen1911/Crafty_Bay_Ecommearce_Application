@@ -37,26 +37,28 @@ class _ProductListScreenState extends State<ProductListScreen> {
         title: Text(widget.category['title'], style: TextStyle(fontSize: 24)),
         forceMaterialTransparency: true,
       ),
-      body: GetBuilder(
-        init: _productController,
-        builder: (controller) {
-          return
-            controller.inProgress ? Center(child: CircularProgressIndicator()):
-            GridView.builder(
-            itemCount: controller.producvtList.length,
-            padding: EdgeInsets.symmetric(horizontal: 14),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: 230,
-              mainAxisSpacing: 16,
-            ),
-            itemBuilder: (context, index) {
-              return FittedBox(child: ProductCart(
-                products: controller.producvtList[index],
-              ));
-            },
-          );
-        }
+      body: SafeArea(
+        child: GetBuilder(
+          init: _productController,
+          builder: (controller) {
+            return
+              controller.inProgress ? Center(child: CircularProgressIndicator()):
+              GridView.builder(
+              itemCount: controller.producvtList.length,
+              padding: EdgeInsets.symmetric(horizontal: 14),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 230,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                return FittedBox(child: ProductCart(
+                  products: controller.producvtList[index],
+                ));
+              },
+            );
+          }
+        ),
       ),
     );
   }

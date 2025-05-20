@@ -2,14 +2,16 @@ import 'package:crafty_bay/app/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ColorPicker extends StatefulWidget {
-  const ColorPicker({super.key});
+  const ColorPicker({super.key, required this.colors, required this.onChange});
+  final List<String> colors;
+  final Function(String) onChange;
 
   @override
   State<ColorPicker> createState() => _ColorPickerState();
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  int? _colorIndex;
+  String? _colorIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,13 @@ class _ColorPickerState extends State<ColorPicker> {
       height: 30,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        itemCount: widget.colors.length,
         itemBuilder: (context, index) {
+          String color = widget.colors[index];
           return GestureDetector(
             onTap: () {
-              _colorIndex = index;
+              _colorIndex = color;
+              widget.onChange(color);
               setState(() {});
             },
             child: Container(
@@ -30,14 +34,14 @@ class _ColorPickerState extends State<ColorPicker> {
               margin: EdgeInsets.only(right: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: _colorIndex ==index ? AppColors.themeColor : AppColors.themeColor.withOpacity(0.4),
+                color: _colorIndex == color ? AppColors.themeColor : AppColors.themeColor.withOpacity(0.4),
               ),
               child: Center(
                 child: Text(
-                  'color',
+                  color,
                   style: TextStyle(
-                    fontSize: 10,
-                    color: _colorIndex == index ? Colors.white : Colors.black,
+                    fontSize: 9,
+                    color: _colorIndex == color ? Colors.white : Colors.black,
                   ),
                 ),
               ),

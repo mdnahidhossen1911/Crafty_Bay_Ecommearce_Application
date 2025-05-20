@@ -1,4 +1,5 @@
 import 'package:crafty_bay/app/app_color.dart';
+import 'package:crafty_bay/app/asset_path.dart';
 import 'package:crafty_bay/feature/common/model/category_model.dart';
 import 'package:crafty_bay/feature/product/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,9 @@ class CategoryItem extends StatelessWidget {
                   categoryModel.icon,
                   width: 48,
                   height: 48,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(AssetsPath.noImage,width: 32,);
+                  },
                 ),
               ),
             ),

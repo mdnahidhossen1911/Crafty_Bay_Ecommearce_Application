@@ -17,7 +17,7 @@ class ControllerBinder extends Bindings{
     Get.put(MainBottomNavIndexController());
     Get.put(NetworkCaller());
     Get.put(AuthController());
-    Get.lazyPut(() =>  SignInController());
+    Get.put(SignInController());
     Get.lazyPut(() =>  SignUpController());
     Get.lazyPut(() =>  OtpVerifyicationController());
     Get.put(HomeSliderController());

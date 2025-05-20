@@ -1,3 +1,5 @@
+import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/feature/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay/feature/card/ui/screens/card_screen.dart';
 import 'package:crafty_bay/feature/caregory/screens/category_list_screen.dart';
 import 'package:crafty_bay/feature/common/controller/category_controller.dart';
@@ -22,8 +24,8 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+  AuthController authController = Get.find<AuthController>();
 
-  int _currentIndex = 0;
   final List<Widget> _screens = [
     HomeScreen(),
     CategoryScreen(),
@@ -53,8 +55,12 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
         builder: (controller) {
           return BottomNavigationBar(
             currentIndex: controller.currentIndex,
-              onTap: (value) {
-                controller.changeIndex(value);
+              onTap: (index) {
+                if (controller.shouldNavigate(index)) {
+                  controller.changeIndex(index);
+                } else {
+                  Get.to(() => const SignInScreen());
+                }
               },
               items: [
             BottomNavigationBarItem(icon: Icon(Icons.home_outlined),activeIcon: Icon(Icons.home),label: context.localization.home),

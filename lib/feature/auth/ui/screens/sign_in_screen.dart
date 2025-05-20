@@ -3,14 +3,12 @@ import 'package:crafty_bay/feature/auth/data/model/sign_in_request_model.dart';
 import 'package:crafty_bay/feature/auth/ui/controller/sign_in_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/screens/sign_up_screen.dart';
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
-import 'package:crafty_bay/feature/common/screens/main_botton_nav_screen.dart';
 import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
-import 'package:crafty_bay/core/extensions/text_theme_extension.dart';
 import 'package:crafty_bay/core/widgets/show_snack_Bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart' show Get;
-import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get.dart';
+
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -132,7 +130,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       );
       if(isSuccess){
-        Navigator.pushNamedAndRemoveUntil(context, MainBottomNavScreen.name, (route) => false,);
+        Get.back();
       }else{
         showSnackBarMessage(context, signInController.errorMsg,true);
       }

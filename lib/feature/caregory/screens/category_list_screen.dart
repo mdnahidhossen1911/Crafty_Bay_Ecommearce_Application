@@ -80,6 +80,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             },
                           ),
                         ),
+                    SliverToBoxAdapter(
+                      child: Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+                    ),
                     if (controller.paginationInProgress)
                       SliverToBoxAdapter(
                         child: Center(child: CircularProgressIndicator()),
