@@ -30,14 +30,14 @@ class ProductModel {
 
     return ProductModel(
       id: jsonData['_id'],
-      title: jsonData['title'],
+      title: jsonData['title']??'',
       regularPrice: jsonData['regular_price'] ?? 0,
-      currentPrice: jsonData['current_price'],
+      currentPrice: jsonData['current_price']??0,
       rating: jsonData['rating'] ?? 0.0,
       photos: List<String>.from(photoList),
       sizes: List<String>.from(sizeList),
       colors: List<String>.from(colorList),
-      availableQuantity: jsonData['quantity'],
+      availableQuantity: jsonData['quantity']??0,
       description: jsonData['description'] ?? '',
     );
   }

@@ -1,23 +1,18 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/app/asset_path.dart';
-import 'package:crafty_bay/feature/product/data/product_model.dart';
 import 'package:crafty_bay/feature/product/screens/product_details_screen.dart';
+import 'package:crafty_bay/feature/wishlist/model/wish_list_model.dart';
 import 'package:flutter/material.dart';
 
-class ProductCart extends StatelessWidget {
-  final ProductModel products;
-
-  const ProductCart({super.key, required this.products});
+class WishListWidget extends StatelessWidget {
+  final WishListProductModel? products;
+  const WishListWidget({super.key,required this.products});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          ProductDetailsScreen.name,
-          arguments: products.id,
-        );
+        Navigator.pushNamed(context, ProductDetailsScreen.name,arguments: products?.id);
       },
       child: Container(
         width: 140,
@@ -33,15 +28,14 @@ class ProductCart extends StatelessWidget {
                     height: 124,
                     width: double.maxFinite,
                     child: Image.network(
-                      products.photos.isNotEmpty ? products.photos.first : '',
+                      products!.photos!.isNotEmpty ? products!.photos!.first:'',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Center(
                           child: SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: Image.asset(AssetsPath.noImage),
-                          ),
+                              width: 60,
+                              height: 60,
+                              child: Image.asset(AssetsPath.noImage)),
                         );
                       },
                     ),
@@ -77,18 +71,14 @@ class ProductCart extends StatelessWidget {
               ],
             ),
             Text(
-              products.title,
+              products!.title??'',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-                height: 1.3,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87, height: 1.3),
             ),
             SizedBox(height: 2),
             Text(
-              '৳${products.currentPrice} ',
+              '৳${products!.currentPrice} ',
               style: TextStyle(
                 color: AppColors.themeColor,
                 fontSize: 12,
