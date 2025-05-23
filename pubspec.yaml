@@ -49,6 +49,8 @@ dependencies:
   shared_preferences: ^2.5.3
   shimmer: ^3.0.0
   palette_generator: ^0.3.3+7
+  flutter_sslcommerz: ^2.4.4
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

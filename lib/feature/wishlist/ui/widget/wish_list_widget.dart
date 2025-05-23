@@ -51,7 +51,7 @@ class WishListWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
-                        Icons.favorite_border,
+                        Icons.favorite,
                         color: AppColors.themeColor,
                         size: 18,
                       ),

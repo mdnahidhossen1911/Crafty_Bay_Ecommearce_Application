@@ -4,7 +4,7 @@ import 'package:crafty_bay/feature/wishlist/model/wish_list_model.dart';
 import 'package:get/get.dart';
 
 class WishListController extends GetxController {
-  final int _perPageDataCount = 30;
+  final int _perPageDataCount = 15;
   bool _inProgress = false;
   bool _paginationInProgress = false;
   int _currentPage = 0;

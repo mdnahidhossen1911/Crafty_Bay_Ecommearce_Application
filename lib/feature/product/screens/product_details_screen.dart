@@ -2,6 +2,7 @@ import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/core/widgets/show_snack_Bar.dart';
 import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/screens/sign_in_screen.dart';
+import 'package:crafty_bay/feature/common/controller/add_to_wish_controller.dart';
 import 'package:crafty_bay/feature/product/controller/add_to_card_controller.dart';
 import 'package:crafty_bay/feature/product/controller/product_details_controller.dart';
 import 'package:crafty_bay/feature/product/data/product_model.dart';
@@ -76,10 +77,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 children: [
                                   _buildTitleAndIncrementDecrement(controller),
                                   _buildReviewSection(context),
-                                  if (controller.productDetails!.colors.isNotEmpty)
-                                    _buildColorSection(controller.productDetails!.colors),
-                                  if (controller.productDetails!.sizes.isNotEmpty)
-                                    _buildSizeSection(controller.productDetails!.sizes),
+                                  if (controller
+                                      .productDetails!
+                                      .colors
+                                      .isNotEmpty)
+                                    _buildColorSection(
+                                      controller.productDetails!.colors,
+                                    ),
+                                  if (controller
+                                      .productDetails!
+                                      .sizes
+                                      .isNotEmpty)
+                                    _buildSizeSection(
+                                      controller.productDetails!.sizes,
+                                    ),
                                   _buildDescriptionSection(controller),
                                 ],
                               ),
@@ -149,7 +160,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
         ),
         SizedBox(width: 16),
-        IncrementDecrementCountWidget(),
+        IncrementDecrementCountWidget(
+          quantity: (count) {
+
+          }, count: controller.productDetails!.availableQuantity??0,
+        ),
       ],
     );
   }
@@ -162,7 +177,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         Text('Size', style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 6),
         SizePicker(
-          sizes: sizes??[],
+          sizes: sizes ?? [],
           onChange: (size) {
             _selectedSize = size;
           },
@@ -179,7 +194,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         Text('Color', style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 6),
         ColorPicker(
-          colors: colors??[],
+          colors: colors ?? [],
           onChange: (color) {
             _selectedColor = color;
           },
@@ -205,12 +220,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.black54),
             ),
           ),
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.favorite, color: AppColors.themeColor),
-            ),
+          GetBuilder(
+            init: AddToWishController(),
+            builder: (controller) {
+              return CircleAvatar(
+                backgroundColor: Colors.white,
+                child:
+                    controller.inProgress == true
+                        ? CircularProgressIndicator()
+                        : IconButton(
+                          onPressed: () async {
+                            bool isSuccess = await controller.apiCall(
+                              widget.id,
+                            );
+                            if (isSuccess) {
+                              showSnackBarMessage(
+                                context,
+                                'Add to wish Successfully',
+                              );
+                            } else {
+                              showSnackBarMessage(
+                                context,
+                                controller.errorMessage,
+                                true,
+                              );
+                            }
+                          },
+                          icon: Icon(
+                            Icons.favorite_border,
+                            color: AppColors.themeColor,
+                          ),
+                        ),
+              );
+            },
           ),
         ],
       ),
@@ -239,9 +281,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Price', style: TextStyle(fontWeight: FontWeight.bold)),
                     Text(
-                      '\$1233',
+                      'Price',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      '৳${product!.currentPrice}',
                       style: TextStyle(
                         fontSize: 16,
                         color: AppColors.themeColor,
@@ -256,31 +301,31 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 replacement: CircularProgressIndicator(),
                 child: ElevatedButton(
                   onPressed: () async {
-
-                    if(product!.colors.isNotEmpty && _selectedColor == null ){
-                      showSnackBarMessage(context, 'Select color',true);
+                    if (product!.colors.isNotEmpty && _selectedColor == null) {
+                      showSnackBarMessage(context, 'Select color', true);
                       return;
                     }
 
-                    if(product.sizes.isNotEmpty && _selectedSize == null ){
-                      showSnackBarMessage(context, 'Select size',true);
+                    if (product.sizes.isNotEmpty && _selectedSize == null) {
+                      showSnackBarMessage(context, 'Select size', true);
                       return;
                     }
 
-                    bool isValid =  Get.find<AuthController>().isValid();
+                    bool isValid = Get.find<AuthController>().isValid();
                     if (isValid == false) {
                       Get.to(SignInScreen());
                       return;
                     }
                     bool isSuccess = await controller.apiCall(product.id);
-                    if(isSuccess){
+                    if (isSuccess) {
                       showSnackBarMessage(context, 'add successfully');
-                    }else{
-                      showSnackBarMessage(context, controller.errorMessage,true);
+                    } else {
+                      showSnackBarMessage(
+                        context,
+                        controller.errorMessage,
+                        true,
+                      );
                     }
-
-
-
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
@@ -296,7 +341,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             ],
           ),
         );
-      }
+      },
     );
   }
 }

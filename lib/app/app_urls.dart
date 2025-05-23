@@ -7,8 +7,10 @@ class AppUrls {
   static const String slidesUrl = '$_baseUrl/slides';
   static const String CategoryUrl = '$_baseUrl/categories';
   static const String productListUrl = '$_baseUrl/products';
-  static const String addToCard = '$_baseUrl/cart';
+  static const String card = '$_baseUrl/cart';
   static const String wishlist = '$_baseUrl/wishlist';
+  static String cardById(String id) => '$_baseUrl/cart/$id';
+
 
   static String productDetailsUrl(String id) => '$_baseUrl/products/id/$id';
 }

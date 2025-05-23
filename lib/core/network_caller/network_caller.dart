@@ -221,38 +221,33 @@ class NetworkCaller {
     try {
       Uri uri = Uri.parse(url);
       Map<String, String> headers = {
-        'content-type': 'application/json',
-        'token':  Get.find<AuthController>().token??'',
+        'Content-Type': 'application/json',
+        'token': Get.find<AuthController>().token ?? '',
       };
-
       _logRequest(url, headers);
-      Response response = await delete(
-        uri,
-        headers: headers,
-        body: jsonEncode(body),
-      );
-      _logResponse(url, response);
-
-      if (response.statusCode == 200) {
-        final decodedResponse = jsonDecode(response.body);
-        return NetworkResponse(
-          isSuccess: true,
-          statusCode: response.statusCode,
-          responseData: decodedResponse,
-        );
-      } else if (response.statusCode == 401) {
-        await _clearUserData();
-        return NetworkResponse(
-          isSuccess: false,
-          statusCode: response.statusCode,
+      Response response;
+      if (body != null && body.isNotEmpty) {
+        response = await delete(
+          uri,
+          headers: headers,
+          body: jsonEncode(body),
         );
       } else {
-        return NetworkResponse(
-          isSuccess: false,
-          statusCode: response.statusCode,
+        response = await delete(
+          uri,
+          headers: headers,
         );
       }
+      _logResponse(url, response);
+
+      // Process the response and return a NetworkResponse
+      return NetworkResponse(
+        isSuccess: response.statusCode == 200,
+        statusCode: response.statusCode,
+        responseData: jsonDecode(response.body),
+      );
     } catch (e) {
+      // Handle exceptions and return a NetworkResponse
       return NetworkResponse(
         isSuccess: false,
         statusCode: -1,

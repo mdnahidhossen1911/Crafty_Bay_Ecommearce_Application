@@ -2,7 +2,7 @@ import 'package:crafty_bay/app/app_urls.dart';
 import 'package:crafty_bay/core/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 
-class AddToCardController extends GetxController {
+class AddToWishController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';
 
@@ -16,7 +16,7 @@ class AddToCardController extends GetxController {
 
     update();
     NetworkResponse response = await NetworkCaller().postRequest(
-      url: AppUrls.card,
+      url: AppUrls.wishlist,
       body: {"product": productId},
     );
 

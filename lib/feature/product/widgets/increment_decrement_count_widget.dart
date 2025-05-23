@@ -2,7 +2,10 @@ import 'package:crafty_bay/app/app_color.dart';
 import 'package:flutter/material.dart';
 
 class IncrementDecrementCountWidget extends StatefulWidget {
-  const IncrementDecrementCountWidget({super.key});
+   IncrementDecrementCountWidget({super.key, required this.quantity, required this.count});
+  final Function(int) quantity;
+  int count;
+
 
   @override
   State<IncrementDecrementCountWidget> createState() =>
@@ -11,7 +14,7 @@ class IncrementDecrementCountWidget extends StatefulWidget {
 
 class _IncrementDecrementCountWidgetState
     extends State<IncrementDecrementCountWidget> {
-  int conut = 1;
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,8 @@ class _IncrementDecrementCountWidgetState
       children: [
         GestureDetector(
           onTap: () {
-            conut++;
+            widget.count++;
+            widget.quantity( widget.count);
             setState(() {});
           },
           child: Container(
@@ -34,15 +38,16 @@ class _IncrementDecrementCountWidgetState
         ),
         SizedBox(width: 8),
         Text(
-          '$conut',
+          '${widget.count}',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(width: 8),
         GestureDetector(
           onTap: () {
-            switch (conut) {
+            switch (widget.count) {
               case > 1:
-              conut--;
+                widget.count--;
+              widget.quantity(widget.count);
             }
             setState(() {});
           },
@@ -52,7 +57,7 @@ class _IncrementDecrementCountWidgetState
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               color:
-                  conut < 2
+              widget.count < 2
                       ? AppColors.themeColor.withOpacity(0.6)
                       : AppColors.themeColor,
             ),
