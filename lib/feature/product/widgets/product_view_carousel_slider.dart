@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/feature/product/data/product_model.dart';

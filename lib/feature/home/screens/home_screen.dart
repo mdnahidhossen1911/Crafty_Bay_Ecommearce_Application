@@ -14,7 +14,6 @@ import 'package:crafty_bay/feature/home/widgets/section_header.dart';
 import 'package:crafty_bay/feature/product/data/product_model.dart';
 import 'package:crafty_bay/feature/product/screens/new_product_list_screen.dart';
 import 'package:crafty_bay/feature/product/screens/popular_product_list_screen.dart';
-import 'package:crafty_bay/feature/product/screens/product_list_screen.dart';
 import 'package:crafty_bay/feature/product/screens/special_product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  SizedBox _buildNewProductView() {
+  Widget _buildNewProductView() {
     return SizedBox(
       height: 190,
       child: GetBuilder<NewProductListController>(
@@ -134,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  SizedBox _buildSpecialProductView() {
+  Widget _buildSpecialProductView() {
     return SizedBox(
       height: 190,
       child: GetBuilder<SpecialProductListController>(
@@ -168,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  SizedBox _buildPopularProductView() {
+  Widget _buildPopularProductView() {
     return SizedBox(
       height: 190,
       child: GetBuilder<PopularProductListController>(
@@ -203,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Padding _buildSearchView() {
+  Widget _buildSearchView() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(

@@ -131,7 +131,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         SizedBox(width: 8),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, ProductReviewScreen.name);
+            Navigator.pushNamed(context, ProductReviewScreen.name, arguments: widget.id);
           },
           child: Text(
             'Reviews',
@@ -163,7 +163,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         IncrementDecrementCountWidget(
           quantity: (count) {
 
-          }, count: controller.productDetails!.availableQuantity??0,
+          }, count: controller.productDetails!.availableQuantity,
         ),
       ],
     );
@@ -301,7 +301,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 replacement: CircularProgressIndicator(),
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (product!.colors.isNotEmpty && _selectedColor == null) {
+                    if (product.colors.isNotEmpty && _selectedColor == null) {
                       showSnackBarMessage(context, 'Select color', true);
                       return;
                     }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sslcommerz/flutter_sslcommerz.dart';
 import 'package:flutter_sslcommerz/model/SSLCCustomerInfoInitializer.dart';
 import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
 import 'package:flutter_sslcommerz/model/SSLCTransactionInfoModel.dart';

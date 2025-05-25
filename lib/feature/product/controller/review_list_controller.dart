@@ -1,17 +1,17 @@
 import 'package:crafty_bay/app/app_urls.dart';
 import 'package:crafty_bay/core/network_caller/network_caller.dart';
-import 'package:crafty_bay/feature/product/data/product_get_request_model.dart';
-import 'package:crafty_bay/feature/product/data/product_model.dart';
+import 'package:crafty_bay/feature/product/data/review_model.dart';
 import 'package:get/get.dart';
 
-class ProductListController extends GetxController {
+class ReviewListController extends GetxController {
   final int _perPageDataCount = 30;
   bool _inProgress = false;
   bool _paginationInProgress = false;
   int _currentPage = 0;
   int? _totalPage;
   String? _errorMassage;
-  List<ProductModel> _productList = [];
+  int? _totalReviewCount;
+  List<ReviewModel> _reviewList = [];
 
   bool get inProgress => _inProgress;
 
@@ -21,9 +21,12 @@ class ProductListController extends GetxController {
 
   int get currentPage => _currentPage;
 
-  List<ProductModel> get producvtList => _productList;
+  List<ReviewModel> get reviewList => _reviewList;
+  int? get totalReviewCount => _totalReviewCount;
 
-  Future<bool> getProduct(ProductGetRequestModel model) async {
+
+
+  Future<bool> getProductReview(String id) async {
     if (_paginationInProgress) {
       return false;
     }
@@ -43,23 +46,24 @@ class ProductListController extends GetxController {
     update();
 
     NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
-      url: AppUrls.productListUrl,
-      queryParams: {
+      url: AppUrls.reviewList,queryParams: {
         'count': _perPageDataCount,
         'page': _currentPage,
-        'tag': model.tag??'',
-        'category': model.category??'',
+        'product': id,
       },
     );
     if (response.isSuccess) {
-      _productList.addAll(
+      _reviewList.addAll(
         (response.responseData!['data']['results'] as List)
-            .map((e) => ProductModel.fromJson(e))
+            .map((e) => ReviewModel.fromJson(e))
             .toList(),
       );
       _totalPage = response.responseData!['data']['last_page'] ?? _totalPage;
+      _totalReviewCount = response.responseData!['data']['total'] ?? _totalReviewCount;
       isSuccess = true;
       _errorMassage = '';
+      print(_reviewList.length);
+      print(_totalReviewCount);
     } else {
       isSuccess = false;
       _errorMassage = response.errorMessage;
@@ -71,9 +75,11 @@ class ProductListController extends GetxController {
     return isSuccess;
   }
 
-  void refrash(ProductGetRequestModel model) {
-    _productList = [];
+  refrash(String id) {
     _currentPage = 0;
-    getProduct(model);
+    _reviewList =[];
+    getProductReview(id);
+    update();
   }
+
 }

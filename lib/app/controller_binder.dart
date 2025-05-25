@@ -26,6 +26,7 @@ class ControllerBinder extends Bindings{
     Get.put(PopularProductListController());
     Get.put(SpecialProductListController());
     Get.put(NewProductListController());
-    Get.lazyPut(() => ProductCardController());
+    Get.put(ProductCardController());
+
   }
 }

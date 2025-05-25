@@ -24,7 +24,7 @@ class AddToCardController extends GetxController {
       isSuccess = true;
     }else{
       isSuccess = false;
-      _errorMessage = response.errorMessage??'';
+      _errorMessage = response.errorMessage;
     }
 
     _inProgress = false;

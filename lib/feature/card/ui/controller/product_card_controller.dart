@@ -54,7 +54,7 @@ class ProductCardController extends GetxController {
   double get totalPrice {
     double total = 0;
     for (CardModel cartItem in _cardList) {
-      total += (cartItem.currentPrice! * cartItem.quantity!) as double;
+      total += (cartItem.currentPrice! * cartItem.quantity!);
     }
     return total;
   }

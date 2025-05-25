@@ -1,6 +1,4 @@
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
-import 'package:crafty_bay/feature/common/widgets/product_card.dart';
-import 'package:crafty_bay/feature/wishlist/model/wish_list_model.dart';
 import 'package:crafty_bay/feature/wishlist/ui/controller/wish_list_controller.dart';
 import 'package:crafty_bay/feature/wishlist/ui/widget/wish_list_widget.dart';
 import 'package:flutter/material.dart';
