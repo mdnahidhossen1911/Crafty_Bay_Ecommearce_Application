@@ -1,5 +1,5 @@
 # crafty_bay
-Flutter version: 3.29.1 
+Flutter version: 3.29.1 <br>
 Crafty Bay E Commerce project
 
 ## Getting Started
