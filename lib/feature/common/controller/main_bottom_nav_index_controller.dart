@@ -1,4 +1,4 @@
-import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:get/get.dart';
 
 class MainBottomNavIndexController extends GetxController {

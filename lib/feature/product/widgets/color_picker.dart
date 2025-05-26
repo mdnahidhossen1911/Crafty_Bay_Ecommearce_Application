@@ -1,5 +1,6 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ColorPicker extends StatefulWidget {
   const ColorPicker({super.key, required this.colors, required this.onChange});
@@ -11,7 +12,7 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  String? _colorIndex;
+  final RxString _colorIndex=''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +25,25 @@ class _ColorPickerState extends State<ColorPicker> {
           String color = widget.colors[index];
           return GestureDetector(
             onTap: () {
-              _colorIndex = color;
+              _colorIndex.value = color;
               widget.onChange(color);
-              setState(() {});
             },
-            child: Container(
-              width: 30,
-              height: 30,
-              margin: EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: _colorIndex == color ? AppColors.themeColor : AppColors.themeColor.withOpacity(0.4),
-              ),
-              child: Center(
-                child: Text(
-                  color,
-                  style: TextStyle(
-                    fontSize: 9,
-                    color: _colorIndex == color ? Colors.white : Colors.black,
+            child: Obx(
+              () =>  Container(
+                width: 30,
+                height: 30,
+                margin: EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: _colorIndex.value == color ? AppColors.themeColor : AppColors.themeColor.withOpacity(0.4),
+                ),
+                child: Center(
+                  child: Text(
+                    color,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: _colorIndex.value == color ? Colors.white : Colors.black,
+                    ),
                   ),
                 ),
               ),

@@ -16,13 +16,21 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   final ProductListController _productController = ProductListController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _productController.getProduct(ProductGetRequestModel(category: widget.category['id']??''));
+    _scrollController.addListener(pagination);
   }
+  void pagination(){
+    if(_scrollController.position.extentAfter < 300){
+      _productController.getProduct(ProductGetRequestModel(category: widget.category['id']??''));
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,35 +38,54 @@ class _ProductListScreenState extends State<ProductListScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back_ios_new_outlined),
         ),
         title: Text(widget.category['title'], style: TextStyle(fontSize: 24)),
         forceMaterialTransparency: true,
       ),
-      body: SafeArea(
-        child: GetBuilder(
-          init: _productController,
+      body: GetBuilder(
+        init: _productController,
           builder: (controller) {
-            return
-              controller.inProgress ? Center(child: CircularProgressIndicator()):
-              GridView.builder(
-              itemCount: controller.producvtList.length,
-              padding: EdgeInsets.symmetric(horizontal: 14),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 230,
-                mainAxisSpacing: 16,
-              ),
-              itemBuilder: (context, index) {
-                return FittedBox(child: ProductCart(
-                  products: controller.producvtList[index],
-                ));
+            return controller.inProgress
+                ? Center(child: CircularProgressIndicator())
+                : RefreshIndicator(
+              onRefresh: () async {
+                _productController.refrash(ProductGetRequestModel(category: widget.category['id']??''));
               },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisExtent: 200,
+                        mainAxisSpacing: 20,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                          childCount: controller.producvtList.length,
+                              (context, index) {
+                            return FittedBox(
+                              child: ProductCart(
+                                products: controller.producvtList[index],
+                              ),
+                            );
+                          }),
+                    ),
+                    if(controller.paginationInProgress)
+                      SliverToBoxAdapter(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                  ],
+                ),
+              ),
             );
           }
-        ),
       ),
     );
   }

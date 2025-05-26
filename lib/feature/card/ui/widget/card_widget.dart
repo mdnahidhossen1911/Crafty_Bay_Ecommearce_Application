@@ -23,7 +23,7 @@ class CardWidget extends StatefulWidget {
 
 class _CardWidgetState extends State<CardWidget> {
 
-  bool _deleteInProgress = false;
+  final RxBool _deleteInProgress = false.obs;
 
 
   @override
@@ -70,26 +70,26 @@ class _CardWidgetState extends State<CardWidget> {
               ],
             ),
           ),
-          Visibility(
-            visible: _deleteInProgress == false,
-            replacement: const CircularProgressIndicator(),
-            child: IconButton(
-              onPressed: () async {
-                _deleteInProgress = true;
-                setState(() {});
-                final bool isSuccess = await Get.find<ProductCardController>()
-                    .removeFromCart(widget.cardModel);
-                _deleteInProgress = false;
-                setState(() {});
-                if (isSuccess == false) {
-                  showSnackBarMessage(
-                    context,
-                    Get.find<ProductCardController>().removeFromCartErrorMessage!,
-                    true,
-                  );
-                }
-              },
-              icon: const Icon(Icons.delete_outline,color: Colors.grey,),
+          Obx(
+            () =>  Visibility(
+              visible: _deleteInProgress.value == false,
+              replacement: const CircularProgressIndicator(),
+              child: IconButton(
+                onPressed: () async {
+                  _deleteInProgress.value = true;
+                  final bool isSuccess = await Get.find<ProductCardController>()
+                      .removeFromCart(widget.cardModel);
+                  _deleteInProgress.value = false;
+                  if (isSuccess == false) {
+                    showSnackBarMessage(
+                      context,
+                      Get.find<ProductCardController>().removeFromCartErrorMessage!,
+                      true,
+                    );
+                  }
+                },
+                icon: const Icon(Icons.delete_outline,color: Colors.grey,),
+              ),
             ),
           ),
           SizedBox(height: 8)

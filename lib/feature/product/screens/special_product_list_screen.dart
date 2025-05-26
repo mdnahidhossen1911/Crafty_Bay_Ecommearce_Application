@@ -35,7 +35,7 @@ class _SpecialProductListScreenState extends State<SpecialProductListScreen> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back_ios_new_outlined),
         ),

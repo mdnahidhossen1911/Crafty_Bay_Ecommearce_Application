@@ -13,6 +13,7 @@ class AppUrls {
   static String cardById(String id) => '$_baseUrl/cart/$id';
 
   static String reviewList = '$_baseUrl/reviews';
+  static String review = '$_baseUrl/review';
 
   static String productDetailsUrl(String id) => '$_baseUrl/products/id/$id';
 }

@@ -1,5 +1,6 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SizePicker extends StatefulWidget {
   const SizePicker({super.key, required this.sizes, required this.onChange});
@@ -11,7 +12,9 @@ class SizePicker extends StatefulWidget {
 }
 
 class _SizePickerState extends State<SizePicker> {
-  String? _sizeIndex;
+
+
+  final RxString _size=''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -24,27 +27,29 @@ class _SizePickerState extends State<SizePicker> {
           String size = widget.sizes[index];
           return GestureDetector(
             onTap: () {
-              _sizeIndex = size;
               widget.onChange(size);
-              setState(() {});
+              _size.value = size;
             },
-            child: Container(
-              width: 30,
-              height: 30,
-              margin: EdgeInsets.only(right: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: _sizeIndex ==size ? AppColors.themeColor :Colors.white,
-                border: Border.all(
-                  color: _sizeIndex != size ?Colors.grey : Colors.transparent
-                )
-              ),
-              child: Center(
-                child: Text(
-                  size,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: _sizeIndex == size ? Colors.white : Colors.grey,
+            child: Obx(
+              () =>
+               Container(
+                width: 30,
+                height: 30,
+                margin: EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: _size.value ==size ? AppColors.themeColor :Colors.white,
+                    border: Border.all(
+                        color: _size.value != size ?Colors.grey : Colors.transparent
+                    )
+                ),
+                child: Center(
+                  child: Text(
+                    size,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: _size.value == size ? Colors.white : Colors.grey,
+                    ),
                   ),
                 ),
               ),
@@ -55,3 +60,5 @@ class _SizePickerState extends State<SizePicker> {
     );
   }
 }
+
+

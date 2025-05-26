@@ -1,6 +1,8 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class IncrementDecrementCountWidget extends StatefulWidget {
    IncrementDecrementCountWidget({super.key, required this.quantity, required this.count});
   final Function(int) quantity;
@@ -15,6 +17,14 @@ class IncrementDecrementCountWidget extends StatefulWidget {
 class _IncrementDecrementCountWidgetState
     extends State<IncrementDecrementCountWidget> {
 
+  RxInt count = 0.obs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    count.value = widget.count;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +32,8 @@ class _IncrementDecrementCountWidgetState
       children: [
         GestureDetector(
           onTap: () {
-            widget.count++;
-            widget.quantity( widget.count);
-            setState(() {});
+            count.value++;
+            widget.quantity(count.value);
           },
           child: Container(
             width: 24,
@@ -37,31 +46,34 @@ class _IncrementDecrementCountWidgetState
           ),
         ),
         SizedBox(width: 8),
-        Text(
-          '${widget.count}',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        Obx(
+          () =>  Text(
+            '${count.value}',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
         ),
         SizedBox(width: 8),
         GestureDetector(
           onTap: () {
-            switch (widget.count) {
+            switch (count.value) {
               case > 1:
-                widget.count--;
-              widget.quantity(widget.count);
+                count.value--;
+              widget.quantity(count.value);
             }
-            setState(() {});
           },
-          child: Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color:
-              widget.count < 2
-                      ? AppColors.themeColor.withOpacity(0.6)
-                      : AppColors.themeColor,
+          child: Obx(
+            () =>  Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color:
+                count.value < 2
+                        ? AppColors.themeColor.withOpacity(0.6)
+                        : AppColors.themeColor,
+              ),
+              child: Icon(Icons.remove, color: Colors.white),
             ),
-            child: Icon(Icons.remove, color: Colors.white),
           ),
         ),
       ],

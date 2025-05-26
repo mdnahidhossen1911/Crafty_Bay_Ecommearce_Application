@@ -13,7 +13,7 @@ class HomeCarouselSlider extends StatefulWidget {
 
 class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
   List carouselitem = [1, 2, 3, 4, 5];
-  int _currentItem = 0;
+  final RxInt _currentItem = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
       builder: (controller) {
         return controller.getSlidersInProgress == false
             ? Visibility(
-          visible: controller.sliders.isNotEmpty,
-              replacement: SizedBox(height: 180,),
+              visible: controller.sliders.isNotEmpty,
+              replacement: SizedBox(height: 180),
               child: Column(
                 children: [
                   CarouselSlider(
@@ -31,8 +31,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                       viewportFraction: 1,
                       autoPlay: true,
                       onPageChanged: (index, reason) {
-                        _currentItem = index;
-                        setState(() {});
+                        _currentItem.value = index;
                       },
                     ),
                     items:
@@ -65,24 +64,23 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                         }).toList(),
                   ),
                   SizedBox(height: 6),
-                  Row(
+                  Obx(() => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       for (int i = 0; i < controller.sliders.length; i++)
                         Container(
                           height: 8,
-                          width: i == _currentItem ? 18 : 8,
+                          width: i == _currentItem.value ? 18 : 8,
                           margin: EdgeInsets.symmetric(horizontal: 1.5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
-                            color:
-                                i == _currentItem
-                                    ? AppColors.themeColor
-                                    : Colors.grey.shade300,
+                            color: i == _currentItem.value
+                                ? AppColors.themeColor
+                                : Colors.grey.shade300,
                           ),
                         ),
                     ],
-                  ),
+                  )),
                 ],
               ),
             )
@@ -95,7 +93,7 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                   width: 45,
                   child: CircularProgressIndicator(),
                 ),
-              )
+              ),
             );
       },
     );

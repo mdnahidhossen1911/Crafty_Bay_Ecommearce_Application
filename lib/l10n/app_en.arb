@@ -26,5 +26,13 @@
   "category": "Category",
   "card": "Card",
   "wish": "Wish",
-  "snew": "New"
+  "snew": "New",
+  "totalPrice": "Total price",
+
+  "color": "Color",
+  "size": "Size",
+  "description": "Description",
+  "review": "Review",
+  "price": "Price",
+  "addToCard" : "Add to card"
 }

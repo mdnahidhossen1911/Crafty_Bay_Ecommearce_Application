@@ -55,7 +55,6 @@ class WishListController extends GetxController {
             .toList(),
       );
       _totalPage = response.responseData!['data']['last_page'] ?? _totalPage;
-      print(_totalPage);
       isSuccess = true;
       _errorMassage = '';
     } else {

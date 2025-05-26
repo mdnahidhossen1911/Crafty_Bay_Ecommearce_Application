@@ -50,7 +50,7 @@ import 'package:crafty_bay/app/app_color.dart';
             appBar: AppBar(
               forceMaterialTransparency: true,
               leading: IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Get.back(),
                 icon: Icon(Icons.arrow_back_ios_new),
               ),
               title: Text('Reviews', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
@@ -142,7 +142,7 @@ import 'package:crafty_bay/app/app_color.dart';
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, ProductAddReviewScreen.name);
+                    Navigator.pushNamed(context, ProductAddReviewScreen.name,arguments: widget.productId);
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0,

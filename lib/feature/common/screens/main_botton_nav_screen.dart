@@ -1,4 +1,4 @@
-import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay/feature/card/ui/screens/card_screen.dart';
 import 'package:crafty_bay/feature/caregory/screens/category_list_screen.dart';

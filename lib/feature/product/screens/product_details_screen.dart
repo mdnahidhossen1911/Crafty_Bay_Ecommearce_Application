@@ -1,6 +1,6 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/core/widgets/show_snack_Bar.dart';
-import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/screens/sign_in_screen.dart';
 import 'package:crafty_bay/feature/common/controller/add_to_wish_controller.dart';
 import 'package:crafty_bay/feature/product/controller/add_to_card_controller.dart';
@@ -215,7 +215,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             backgroundColor: Colors.white,
             child: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
               icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.black54),
             ),
@@ -230,6 +230,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ? CircularProgressIndicator()
                         : IconButton(
                           onPressed: () async {
+
+                            bool isValid = Get.find<AuthController>().isValid();
+                            if (isValid == false) {
+                              Get.to(SignInScreen());
+                              return;
+                            }
+
                             bool isSuccess = await controller.apiCall(
                               widget.id,
                             );

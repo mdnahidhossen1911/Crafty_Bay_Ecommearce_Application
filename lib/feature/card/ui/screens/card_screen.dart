@@ -1,5 +1,6 @@
 import 'package:crafty_bay/app/app_color.dart';
-import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:crafty_bay/feature/card/ui/controller/product_card_controller.dart';
 import 'package:crafty_bay/feature/card/ui/controller/ssl_getway.dart';
 import 'package:crafty_bay/feature/card/ui/widget/card_widget.dart';
@@ -99,7 +100,7 @@ class _CardScreenState extends State<CardScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Total Price',
+                  context.localization.totalPrice,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(

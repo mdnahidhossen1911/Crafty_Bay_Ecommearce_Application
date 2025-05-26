@@ -1,6 +1,6 @@
 import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/app/app_config.dart';
-import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
 import 'package:crafty_bay/feature/common/screens/main_botton_nav_screen.dart';
 import 'package:crafty_bay/core/extensions/app_localization_extension.dart';

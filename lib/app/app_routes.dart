@@ -44,7 +44,8 @@ class AppRoutes {
       String productId = settings.arguments as String;
       route =  ProductReviewScreen(productId: productId);
     } else if (settings.name == ProductAddReviewScreen.name) {
-      route = const ProductAddReviewScreen();
+      String productId = settings.arguments as String;
+      route =  ProductAddReviewScreen(id: productId,);
     }
     return MaterialPageRoute(
       builder: (context) {

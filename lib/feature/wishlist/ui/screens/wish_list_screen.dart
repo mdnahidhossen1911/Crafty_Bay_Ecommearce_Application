@@ -1,3 +1,4 @@
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
 import 'package:crafty_bay/feature/wishlist/ui/controller/wish_list_controller.dart';
 import 'package:crafty_bay/feature/wishlist/ui/widget/wish_list_widget.dart';
@@ -47,7 +48,7 @@ class _WishListScreenState extends State<WishListScreen> {
             },
             icon: Icon(Icons.arrow_back_ios_new_outlined),
           ),
-          title: Text('Popular', style: TextStyle(fontSize: 24)),
+          title: Text(context.localization.wish, style: TextStyle(fontSize: 24)),
           forceMaterialTransparency: true,
         ),
         body: GetBuilder(

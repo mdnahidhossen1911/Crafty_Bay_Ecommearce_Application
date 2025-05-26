@@ -1,7 +1,13 @@
+import 'package:crafty_bay/core/widgets/show_snack_Bar.dart';
+import 'package:crafty_bay/feature/product/controller/add_review_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 class ProductAddReviewScreen extends StatefulWidget {
-  const ProductAddReviewScreen({super.key});
+  const ProductAddReviewScreen({super.key, required this.id});
+
+  final String id;
 
   static String name = '/ProductAddReview';
 
@@ -10,53 +16,94 @@ class ProductAddReviewScreen extends StatefulWidget {
 }
 
 class _ProductAddReviewScreenState extends State<ProductAddReviewScreen> {
+  final AddReviewController _addReviewController = AddReviewController();
+  final TextEditingController _reviewController = TextEditingController();
+  int ratingCount = 3;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
         forceMaterialTransparency: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
           icon: Icon(Icons.arrow_back_ios_new),
         ),
-        title: Text('Add Reviews', style: TextStyle(fontSize: 20)),
+        title: Text('Add Reviews', style: TextStyle(fontSize: 24)),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 52),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'First name'
-                ),
+              SizedBox(height: 30),
+              RatingBar.builder(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder:
+                    (context, _) => Icon(Icons.star, color: Colors.amber),
+                onRatingUpdate: (rating) {
+                  ratingCount = rating.toInt();
+                },
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 30),
               TextField(
-                decoration: InputDecoration(
-                    hintText: 'Last name'
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
+                controller: _reviewController,
                 maxLines: 7,
                 decoration: InputDecoration(
-                    hintText: 'Write Review',
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
-
+                  hintText: 'Write Review',
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                 ),
               ),
               SizedBox(height: 16),
-              ElevatedButton(onPressed: () {
-
-              }, child: Text('Submit'))
+              GetBuilder(
+                init: _addReviewController,
+                builder: (controller) {
+                  return controller.inProgress == true
+                      ? Center(child: CircularProgressIndicator())
+                      : ElevatedButton(
+                        onPressed: () {
+                          if (_reviewController.text.trim().isNotEmpty) {
+                            addReview();
+                          } else {
+                            showSnackBarMessage(
+                              context,
+                              'Place write somthing',
+                              true,
+                            );
+                          }
+                        },
+                        child: Text('Submit'),
+                      );
+                },
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> addReview() async {
+    bool isSuccess = await _addReviewController.apiCall({
+      "product": widget.id,
+      "comment": _reviewController.text.trim(),
+      "rating": ratingCount,
+    });
+    if(isSuccess){
+      showSnackBarMessage(context, 'Add review successfully');
+    }else{
+      showSnackBarMessage(context, _addReviewController.errorMessage,true);
+    }
   }
 }

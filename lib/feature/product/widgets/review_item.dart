@@ -2,10 +2,7 @@ import 'package:crafty_bay/feature/product/data/review_model.dart';
 import 'package:flutter/material.dart';
 
 class ReviewItem extends StatelessWidget {
-  const ReviewItem({
-    super.key,
-    required this.review,
-  });
+  const ReviewItem({super.key, required this.review});
 
   final ReviewModel review;
 
@@ -19,15 +16,31 @@ class ReviewItem extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundColor: Colors.grey.shade300,
-              radius: 16,
+              radius: 20,
               child: Icon(Icons.person),
             ),
             SizedBox(width: 10),
-            Text(review.userName),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    review.userName,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    children: [
+                      for (int i = 0; i < review.rating; i++)
+                        Icon(Icons.star, color: Colors.amber, size: 16),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         SizedBox(height: 8),
-        Text(review.comment),
+        Text(review.comment, style: TextStyle(fontSize: 16)),
         SizedBox(height: 8),
       ],
     );

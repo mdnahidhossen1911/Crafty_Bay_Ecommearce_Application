@@ -1,4 +1,4 @@
-import 'package:crafty_bay/feature/auth/data/model/auth_controller.dart';
+import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/controller/otp_veriffication_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/controller/sign_in_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/controller/sign_up_controller.dart';
@@ -27,6 +27,5 @@ class ControllerBinder extends Bindings{
     Get.put(SpecialProductListController());
     Get.put(NewProductListController());
     Get.put(ProductCardController());
-
   }
 }
