@@ -14,6 +14,8 @@ class OtpVerifyicationController extends GetxController {
 
   Future<bool> verify(VerifyOtpModel verifyModel) async {
     bool isSuccess = false;
+    _inProgress = true;
+    update();
 
     NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
       url: AppUrls.verifyOtpUrl,
@@ -27,6 +29,8 @@ class OtpVerifyicationController extends GetxController {
       isSuccess = false;
       _errorMsg = response.errorMessage;
     }
+    _inProgress = false;
+    update();
     return isSuccess;
   }
 }

@@ -23,7 +23,6 @@ Future<void> sslProcess({
     Sslcommerz sslcommerz = Sslcommerz(
       initializer: SSLCommerzInitialization(
         ipn_url: "https://yourdomain.com/ipn",
-        // Replace with your IPN URL
         multi_card_name: "visa,master,bkash",
         currency: SSLCurrencyType.BDT,
         product_category: "general",
@@ -35,7 +34,6 @@ Future<void> sslProcess({
       ),
     );
 
-    // Add customer information
     sslcommerz.addCustomerInfoInitializer(
       customerInfoInitializer: SSLCCustomerInfoInitializer(
         customerName: customerName,
@@ -49,7 +47,6 @@ Future<void> sslProcess({
       ),
     );
 
-    // Add product information
     sslcommerz.addProductInitializer(
       sslcProductInitializer: SSLCProductInitializer(
         productName: "Test Product",
@@ -58,10 +55,7 @@ Future<void> sslProcess({
       ),
     );
 
-    // Initiate the payment
     SSLCTransactionInfoModel result = await sslcommerz.payNow();
-
-    // Determine the message and background color based on the transaction status
     String message;
     Color backgroundColor;
 
@@ -74,16 +68,11 @@ Future<void> sslProcess({
         message = "Transaction Closed by User";
         backgroundColor = Colors.orange;
         break;
-      case "success":
-        message = "Transaction Successful - Amount: ${result.amount}";
-        backgroundColor = Colors.green;
-        break;
       default:
-        message = "Transaction Status: ${result.status}";
-        backgroundColor = Colors.blue;
+        message = "Transaction Status: Successful";
+        backgroundColor = Colors.green;
     }
 
-    // Display the SnackBar with the transaction status
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),

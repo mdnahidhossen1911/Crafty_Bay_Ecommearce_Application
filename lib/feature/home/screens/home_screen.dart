@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: TextField(
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
-          hintText: 'Search',
+          hintText: context.localization.search,
           prefixIcon: Icon(Icons.search, color: Colors.grey.shade400),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade300),

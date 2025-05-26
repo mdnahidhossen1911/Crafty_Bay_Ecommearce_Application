@@ -41,7 +41,7 @@ class _CardScreenState extends State<CardScreen> {
             },
             icon: Icon(Icons.arrow_back_ios_new),
           ),
-          title: Text('Card', style: TextStyle(fontSize: 24)),
+          title: Text(context.localization.card, style: TextStyle(fontSize: 24)),
           forceMaterialTransparency: true,
         ),
         body: GetBuilder(
@@ -135,7 +135,7 @@ class _CardScreenState extends State<CardScreen> {
                 borderRadius: BorderRadius.circular(30),
               ),
             ),
-            child: Text('Checkout'),
+            child: Text(context.localization.checkOut),
           ),
         ],
       ),

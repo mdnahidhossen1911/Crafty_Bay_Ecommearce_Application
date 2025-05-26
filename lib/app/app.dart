@@ -72,7 +72,7 @@ class CraftyBayApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: Locale('bn'),
+      locale: Locale('en'),
       supportedLocales: [Locale('en'), Locale('bn')],
     );
   }

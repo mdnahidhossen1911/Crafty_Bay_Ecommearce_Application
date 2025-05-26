@@ -9,6 +9,7 @@ import 'package:crafty_bay/core/widgets/show_snack_Bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -156,16 +157,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        oneTabSignUp();
-                      }
+                  GetBuilder<SignUpController>(
+                    builder: (controller) {
+                      return controller.inProgress == true
+                          ? Center(child: CircularProgressIndicator())
+                          : ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                oneTabSignUp();
+                              }
+                            },
+                            child: Text(
+                              context.localization.registration,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
                     },
-                    child: Text(
-                      context.localization.registration,
-                      style: TextStyle(color: Colors.white),
-                    ),
                   ),
                   SizedBox(height: 40),
                 ],
@@ -188,15 +195,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
 
     bool isSuccess = await signUpController.signUp(user);
-    if(isSuccess){
+    if (isSuccess) {
       Navigator.popAndPushNamed(
         context,
         OtpVerificationScreen.name,
-        arguments: _emailTEController.text.trim()
+        arguments: _emailTEController.text.trim(),
       );
-    }else{
-      showSnackBarMessage(context, signUpController.errorMsg,true);
+    } else {
+      showSnackBarMessage(context, signUpController.errorMsg, true);
     }
-
   }
 }

@@ -14,6 +14,8 @@ class SignUpController extends GetxController {
 
   Future<bool> signUp(SignUpModel userModel) async {
     bool isSuccess = false;
+    _inProgress = true;
+    update();
 
     NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
       url: AppUrls.signUpUrl,
@@ -26,6 +28,8 @@ class SignUpController extends GetxController {
       isSuccess = false;
       _errorMsg = response.errorMessage;
     }
+    _inProgress = false;
+    update();
     return isSuccess;
   }
 }

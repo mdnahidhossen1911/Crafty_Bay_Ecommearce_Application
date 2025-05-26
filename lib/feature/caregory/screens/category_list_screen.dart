@@ -1,3 +1,4 @@
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/feature/common/controller/category_controller.dart';
 import 'package:crafty_bay/feature/common/controller/main_bottom_nav_index_controller.dart';
 import 'package:crafty_bay/feature/common/model/category_model.dart';
@@ -44,7 +45,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             },
             icon: Icon(Icons.arrow_back_ios_new),
           ),
-          title: Text('Category', style: TextStyle(fontSize: 24)),
+          title: Text(context.localization.category, style: TextStyle(fontSize: 24)),
         ),
         body: GetBuilder<CategoryController>(
           builder: (controller) {
@@ -65,7 +66,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
-                                mainAxisSpacing: 8,
+                                mainAxisSpacing: 16,
                               ),
                           delegate: SliverChildBuilderDelegate(
                             childCount: controller.categoryList.length,

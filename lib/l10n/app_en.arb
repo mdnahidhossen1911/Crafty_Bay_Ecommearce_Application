@@ -28,11 +28,12 @@
   "wish": "Wish",
   "snew": "New",
   "totalPrice": "Total price",
-
+  "search": "Search",
   "color": "Color",
   "size": "Size",
   "description": "Description",
   "review": "Review",
   "price": "Price",
-  "addToCard" : "Add to card"
+  "addToCard" : "Add to card",
+  "checkOut": "Checkout"
 }

@@ -9,7 +9,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -85,12 +84,18 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _onTabSignIn,
-                  child: Text(
-                    context.localization.signIn,
-                    style: TextStyle(color: Colors.white),
-                  ),
+                GetBuilder<SignInController>(
+                  builder: (controller) {
+                    return controller.inProgress == true
+                        ? Center(child: CircularProgressIndicator())
+                        : ElevatedButton(
+                          onPressed: _onTabSignIn,
+                          child: Text(
+                            context.localization.signIn,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                  },
                 ),
                 SizedBox(height: 16),
                 RichText(
@@ -129,10 +134,10 @@ class _SignInScreenState extends State<SignInScreen> {
           password: _passTEController.text,
         ),
       );
-      if(isSuccess){
+      if (isSuccess) {
         Get.back();
-      }else{
-        showSnackBarMessage(context, signInController.errorMsg,true);
+      } else {
+        showSnackBarMessage(context, signInController.errorMsg, true);
       }
     }
   }

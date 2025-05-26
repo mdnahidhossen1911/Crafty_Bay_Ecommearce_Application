@@ -16,11 +16,14 @@ class SignInController extends GetxController {
 
   Future<bool> signIn(SignInRequestModel signInRequestModel) async {
     bool isSuccess = false;
+    _inProgress = true;
+    update();
 
     NetworkResponse response = await Get.find<NetworkCaller>().postRequest(
       url: AppUrls.signInUrl,
       body: signInRequestModel.toJson(),
     );
+
     if(response.isSuccess){
       isSuccess =true;
       UserModel userModel = UserModel.fromJson(response.responseData!['data']['user']);
@@ -32,6 +35,8 @@ class SignInController extends GetxController {
       isSuccess = false;
       _errorMsg = response.errorMessage;
     }
+    _inProgress = false;
+    update();
     return isSuccess;
   }
 }

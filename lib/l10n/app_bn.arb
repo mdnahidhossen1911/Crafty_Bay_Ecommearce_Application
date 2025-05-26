@@ -27,5 +27,13 @@
   "card": "কার্ড",
   "wish": "ইচ্ছা তালিকা",
   "snew": "নতুন",
-  "totalPrice": "মোট মূল্য"
+  "totalPrice": "মোট মূল্য",
+  "search": "অনুসন্ধান",
+  "color": "রঙ",
+  "size": "আকার",
+  "description": "বর্ণনা",
+  "review": "পর্যালোচনা",
+  "price": "মূল্য",
+  "addToCard" : "কার্ডে যোগ",
+  "checkOut": "চেক আউট"
 }

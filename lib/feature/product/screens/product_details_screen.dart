@@ -1,4 +1,5 @@
 import 'package:crafty_bay/app/app_color.dart';
+import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/core/widgets/show_snack_Bar.dart';
 import 'package:crafty_bay/feature/auth/ui/controller/auth_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/screens/sign_in_screen.dart';
@@ -113,7 +114,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 24),
-        Text('Description', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(context.localization.description, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 6),
         Text(
           controller.productDetails?.description ?? '',
@@ -134,7 +135,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             Navigator.pushNamed(context, ProductReviewScreen.name, arguments: widget.id);
           },
           child: Text(
-            'Reviews',
+            context.localization.review,
             style: TextStyle(
               color: AppColors.themeColor,
               fontWeight: FontWeight.bold,
@@ -174,7 +175,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 16),
-        Text('Size', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(context.localization.size, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 6),
         SizePicker(
           sizes: sizes ?? [],
@@ -191,7 +192,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 12),
-        Text('Color', style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(context.localization.color, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(height: 6),
         ColorPicker(
           colors: colors ?? [],
@@ -289,7 +290,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Price',
+                      context.localization.price,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
@@ -342,7 +343,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: Text('Add to Card'),
+                  child: Text(context.localization.addToCard),
                 ),
               ),
             ],

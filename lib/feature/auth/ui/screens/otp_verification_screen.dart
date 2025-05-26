@@ -2,12 +2,13 @@ import 'package:crafty_bay/app/app_color.dart';
 import 'package:crafty_bay/feature/auth/data/model/verify_otp_model.dart';
 import 'package:crafty_bay/feature/auth/ui/controller/otp_veriffication_controller.dart';
 import 'package:crafty_bay/feature/auth/ui/widgets/app_logo.dart';
-import 'package:crafty_bay/feature/common/screens/main_botton_nav_screen.dart';
 import 'package:crafty_bay/core/extensions/app_localization_extension.dart';
 import 'package:crafty_bay/core/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -52,13 +53,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               _buildPinCodeTextField(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formkey.currentState!.validate()) {
-                      oneTabVerityOtp();
-                    }
+                child: GetBuilder<OtpVerifyicationController>(
+                  builder: (controller) {
+                    return controller.inProgress == true
+                        ? Center(child: CircularProgressIndicator())
+                        : ElevatedButton(
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                              oneTabVerityOtp();
+                            }
+                          },
+                          child: Text('Verify'),
+                        );
                   },
-                  child: Text('Verify'),
                 ),
               ),
 
@@ -137,11 +144,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
     bool isSuccess = await otpVerifyicationController.verify(verifyOtpModel);
     if (isSuccess) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainBottomNavScreen.name,
-        (route) => false,
-      );
+      Get.back();
     }
   }
 }
